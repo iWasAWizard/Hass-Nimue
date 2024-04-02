@@ -1,0 +1,714 @@
+- id: '1639931040158'
+  alias: Turn On Back Porch Light when Back Door Opens
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 41d4fb124c2492ad7643b3a24aedfd81
+    entity_id: binary_sensor.back_door_state_access_control_window_door_is_open_2
+    domain: binary_sensor
+  condition:
+  - condition: sun
+    after: sunset
+    before: sunrise
+  action:
+  - type: turn_on
+    device_id: b51383c2e0dadd9b75791b299f0bc3c7
+    entity_id: ead9e9729693318aea7ecb035ddc3340
+    domain: switch
+  - type: turn_on
+    device_id: e57c7744331df6970105026db22cd9c1
+    entity_id: a266973005433e123d8a248781d05ef0
+    domain: light
+    brightness_pct: 100
+  mode: single
+- id: '1640049663362'
+  alias: Turn Off Back Porch Light when Back Door Closes
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 41d4fb124c2492ad7643b3a24aedfd81
+    entity_id: 53a5d317ae3a82c51096c722fd063cbd
+    domain: binary_sensor
+  condition: []
+  action:
+  - delay:
+      hours: 0
+      minutes: 6
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: e57c7744331df6970105026db22cd9c1
+    entity_id: a266973005433e123d8a248781d05ef0
+    domain: light
+  mode: single
+- id: '1641561771710'
+  alias: Turn On Front Porch Light based on Sun
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: '0'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 740ba0ff12cec33e6d8309f251082d2f
+    entity_id: switch.front_porch_lights_2
+    domain: switch
+  mode: single
+- id: '1642533447242'
+  alias: (Alert) Garage Door Left Open
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 4c79075b3a4b6efdf6fe517a542a0e82
+    entity_id: binary_sensor.garage_door_state_access_control_window_door_is_open
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 20
+      seconds: 0
+  condition: []
+  action:
+  - service: notify.mobile_devices
+    data:
+      message: Garage Door has been open for more than 20 minutes
+      title: Garage Door
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.home_group
+      message: Garage Door has been open for more than 20 minutes
+  mode: restart
+- id: '1659210988512'
+  alias: Turn On Closet Light When Motion Detected
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: e345a44e622d2a61d50c6723d1e267ba
+    entity_id: 496982839cfa088987ee3b3a3deed1d7
+    domain: binary_sensor
+  condition: []
+  action:
+  - type: turn_on
+    device_id: ef75d3fd6ca57bbbf783c2270d0d898a
+    entity_id: switch.master_closet_light
+    domain: switch
+  mode: single
+- id: '1659211091137'
+  alias: Turn Off Closet Light When Motion Not Detected
+  description: ''
+  trigger:
+  - type: no_motion
+    platform: device
+    device_id: e345a44e622d2a61d50c6723d1e267ba
+    entity_id: 496982839cfa088987ee3b3a3deed1d7
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  condition: []
+  action:
+  - type: turn_off
+    device_id: ef75d3fd6ca57bbbf783c2270d0d898a
+    entity_id: switch.master_closet_light
+    domain: switch
+  mode: single
+- id: '1660492336531'
+  alias: Smoke Alarms
+  description: Trigger alarms and alerts on detection of smoke
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.bedroom_smoke_detected
+    - binary_sensor.cunt_cave_smoke_detected
+    - binary_sensor.dick_den_smoke_detected
+    - binary_sensor.garage_smoke_detected
+    - binary_sensor.kitchen_smoke_detected
+    - binary_sensor.office_smoke_detected
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 3
+  condition: []
+  action:
+  - service: notify.mobile_devices
+    data:
+      title: 'Home: Fire Alarm'
+      message: Smoke alarm has been triggered
+  mode: single
+- id: '1660495160031'
+  alias: CO Alarms
+  description: Trigger alarms and alerts on detection of CO
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.bedroom_carbon_monoxide_detected
+    - binary_sensor.cunt_cave_carbon_monoxide_detected
+    - binary_sensor.dick_den_carbon_monoxide_detected
+    - binary_sensor.garage_carbon_monoxide_detected
+    - binary_sensor.kitchen_carbon_monoxide_detected
+    - binary_sensor.office_carbon_monoxide_detected
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: notify.mobile_app_iphone
+    data:
+      title: CO detected in the house!
+      message:
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1
+  - service: notify.mobile_app_pipboy
+    data:
+      title: CO detected in the house!
+      message:
+      data:
+        ttl: 0
+        priority: high
+        channel: alarm_stream
+  mode: single
+- id: '1667488426494'
+  alias: (Alert) Front Door Left Open
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 6390ddff55cb0768d620398bc4dfdaa8
+    entity_id: binary_sensor.front_door_state_access_control_window_door_is_open
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+  condition: []
+  action:
+  - service: notify.mobile_devices
+    data:
+      message: Front Door has been open for more than 2 minutes
+      title: Front Door
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.home_group
+      message: Front Door has been open for more than 2 minutes
+  mode: restart
+- id: '1667488600152'
+  alias: (Alert) Front Door Left Unlocked
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 0ceb32affa3855ba5f662f4701e5c879
+    domain: lock
+    entity_id: fe9ed3812051c52bf5b0b26df0ee7736
+    type: unlocked
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+  condition: []
+  action:
+  - service: notify.mobile_devices
+    data:
+      message: Front Door has been unlocked for more than 2 minutes
+      title: Front Door
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.home_group
+      message: Front Door has been unlocked for more than 2 minutes
+  mode: restart
+- id: '1668533267859'
+  alias: (Alert) Front Door Open
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 6390ddff55cb0768d620398bc4dfdaa8
+    entity_id: binary_sensor.front_door_state_access_control_window_door_is_open
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: tts.google_translate_say
+    data:
+      cache: false
+      entity_id: media_player.home_group
+      message: Front Door
+  mode: single
+- id: '1668533378995'
+  alias: (Alert) Back Door
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 41d4fb124c2492ad7643b3a24aedfd81
+    entity_id: binary_sensor.back_door_state_access_control_window_door_is_open_2
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.home_group
+      message: Back Door
+  mode: single
+- id: '1668533455987'
+  alias: (Alert) Garage Door Open
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 4c79075b3a4b6efdf6fe517a542a0e82
+    entity_id: binary_sensor.garage_door_state_access_control_window_door_is_open
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.home_group
+      message: Garage Door open
+  mode: single
+- id: '1668533651147'
+  alias: (Alert) Garage Door Closed
+  description: ''
+  trigger:
+  - type: not_opened
+    platform: device
+    device_id: 4c79075b3a4b6efdf6fe517a542a0e82
+    entity_id: binary_sensor.garage_door_state_access_control_window_door_is_open
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.home_group
+      message: Garage Door closed
+  mode: single
+- id: '1692670379797'
+  alias: (Trigger) Bedroom Light
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 6d67329699c3d2f8010d89774b6b6cce
+    entity_id: 6b363a25721834ba70989d8c3523f099
+    domain: switch
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.bedroom_daylight
+    metadata: {}
+  mode: single
+- id: '1692705032999'
+  alias: (Trigger) Living Room Light
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 1422d382bee24aa7d36e73d9fbf4791a
+    entity_id: 8e97ed6dcf4463ab8ffdd8bafa8e89e6
+    domain: switch
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.living_room_daylight
+    metadata: {}
+  mode: single
+- id: '1692705178425'
+  alias: (Trigger) Kitchen Light
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 82f66f3d6775a87863d76920daa91603
+    entity_id: b844b6cbaf191ef48df9c96b194ea2c7
+    domain: switch
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.kitchen_daylight
+    metadata: {}
+  mode: single
+- id: '1692705225677'
+  alias: (Trigger) Cunt Cave Light
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 44c9f6bd8abf1d4902d3120a7135ef5c
+    entity_id: 654eeae064acb714ae8b19cbcbce6bb7
+    domain: switch
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.cunt_cave_daylight
+    metadata: {}
+  mode: single
+- id: '1692705261149'
+  alias: (Trigger) Dick Den Light
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 7d6634de2f8407d092a9122a5cfe7130
+    entity_id: 17cb75b286a92328b26558ff5db617c9
+    domain: switch
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.dick_den_daylight
+    metadata: {}
+  mode: single
+- id: '1692705738164'
+  alias: (Trigger) Office Light
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 99a5360e1dc17b84ed0909ab01ec5e2e
+    entity_id: db5534ed9dda3c7914d60adf070c5990
+    domain: switch
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.office_daylight
+    metadata: {}
+  mode: single
+- id: '1692706092135'
+  alias: (Trigger) Laundry Room Light
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 782707b13f0528dde3d029cb18dce1c9
+    entity_id: 6fc0b1e8fc6b234d4f85752f1b70d1aa
+    domain: switch
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.laundry_room_daylight
+    metadata: {}
+  mode: single
+- id: '1693705034242'
+  alias: (Trigger) Back Yard Light
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: b51383c2e0dadd9b75791b299f0bc3c7
+    entity_id: ead9e9729693318aea7ecb035ddc3340
+    domain: switch
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.back_yard_daylight
+    metadata: {}
+  mode: single
+- id: '1696132797311'
+  alias: Turn on wax melter in the morning
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:30:00
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 30d7cf4a3e8d6a58117e8b7c3e984ff7
+    entity_id: 185c7c6325a3717870a9257991958f62
+    domain: switch
+  mode: single
+- id: '1696132873488'
+  alias: Turn off Wax Melter at night
+  description: ''
+  trigger:
+  - platform: time
+    at: '21:30:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 30d7cf4a3e8d6a58117e8b7c3e984ff7
+    entity_id: 185c7c6325a3717870a9257991958f62
+    domain: switch
+  mode: single
+- id: '1698874545936'
+  alias: Sam left work!
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 8ff3cec76d650077f09771fc250ee25d
+    domain: device_tracker
+    entity_id: 7e6009b3a5d1d23e0c436945a062678d
+    type: leaves
+    zone: zone.satcom
+  condition:
+  - condition: template
+    value_template: '{{ state_attr(''device_tracker.sweet'', ''latitude'') != state_attr(''device_tracker.spicy'',
+      ''latitude'') and state_attr(''device_tracker.sweet'', ''longitude'') != state_attr(''device_tracker.spicy'',
+      ''longitude'') }}'
+  action:
+  - parallel:
+    - service: notify.mobile_app_spicy
+      data:
+        message: Sam left work!
+    - service: notify.mobile_app_spicypad
+      data:
+        message: Sam left work!
+  mode: single
+- id: '1698874597290'
+  alias: Sams home!
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 8ff3cec76d650077f09771fc250ee25d
+    domain: device_tracker
+    entity_id: 7e6009b3a5d1d23e0c436945a062678d
+    type: enters
+    zone: zone.home
+  condition:
+  - condition: template
+    value_template: '{{ state_attr(''device_tracker.sweet'', ''latitude'') != state_attr(''device_tracker.spicy'',
+      ''latitude'') and state_attr(''device_tracker.sweet'', ''longitude'') != state_attr(''device_tracker.spicy'',
+      ''longitude'') }}'
+  action:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 15
+      milliseconds: 0
+  - parallel:
+    - service: notify.mobile_app_spicy
+      data:
+        message: Sam's home!
+    - service: notify.mobile_app_spicypad
+      data:
+        message: Sam's home!
+  mode: single
+- id: '1698874697385'
+  alias: Sam made it to work!
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 8ff3cec76d650077f09771fc250ee25d
+    domain: device_tracker
+    entity_id: 7e6009b3a5d1d23e0c436945a062678d
+    type: enters
+    zone: zone.satcom
+  condition:
+  - condition: template
+    value_template: '{{ state_attr(''device_tracker.sweet'', ''latitude'') != state_attr(''device_tracker.spicy'',
+      ''latitude'') and state_attr(''device_tracker.sweet'', ''longitude'') != state_attr(''device_tracker.spicy'',
+      ''longitude'') }}'
+  action:
+  - parallel:
+    - service: notify.mobile_app_spicy
+      data: {}
+    - service: notify.mobile_app_spicypad
+      data: {}
+    - service: notify.html5_notifier_macbookpro
+      data: {}
+  mode: single
+- id: '1698875001093'
+  alias: Sam's close!
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 8ff3cec76d650077f09771fc250ee25d
+    domain: device_tracker
+    entity_id: 7e6009b3a5d1d23e0c436945a062678d
+    type: enters
+    zone: zone.hammock_trace
+  condition:
+  - condition: template
+    value_template: '{{ state_attr(''device_tracker.sweet'', ''latitude'') != state_attr(''device_tracker.spicy'',
+      ''latitude'') and state_attr(''device_tracker.sweet'', ''longitude'') != state_attr(''device_tracker.spicy'',
+      ''longitude'') }}'
+  action:
+  - parallel:
+    - service: notify.mobile_app_spicy
+      data:
+        message: Sam's in the neighborhood!
+    - service: notify.mobile_app_spicypad
+      data:
+        message: Sam's in the neighborhood!
+  mode: single
+- id: '1699145994471'
+  alias: (Geofence) Joey left work!
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 0d6f31e839d3a326d066d2176a89ba10
+    domain: device_tracker
+    entity_id: 9990a42b0bd24a8f4c6fc5f894614a29
+    type: leaves
+    zone: zone.rii
+  condition:
+  - condition: zone
+    entity_id: device_tracker.spicy
+    zone: zone.hammock_trace
+  - condition: template
+    value_template: '{{ state_attr(''device_tracker.sweet'', ''latitude'') != state_attr(''device_tracker.spicy'',
+      ''latitude'') and state_attr(''device_tracker.sweet'', ''longitude'') != state_attr(''device_tracker.spicy'',
+      ''longitude'') }}'
+  action:
+  - service: notify.mobile_app_sweet
+    data:
+      message: Joey left work!
+  mode: single
+- id: '1699146041147'
+  alias: (Geofence) Joey entered the neighborhood!
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 0d6f31e839d3a326d066d2176a89ba10
+    domain: device_tracker
+    entity_id: 9990a42b0bd24a8f4c6fc5f894614a29
+    type: enters
+    zone: zone.hammock_trace
+  condition:
+  - condition: zone
+    entity_id: device_tracker.spicy
+    zone: zone.hammock_trace
+  - condition: template
+    value_template: '{{ state_attr(''device_tracker.sweet'', ''latitude'') != state_attr(''device_tracker.spicy'',
+      ''latitude'') and state_attr(''device_tracker.sweet'', ''longitude'') != state_attr(''device_tracker.spicy'',
+      ''longitude'') }}'
+  action:
+  - service: notify.mobile_app_sweet
+    data:
+      message: Joey entered the neighborhood!
+  mode: single
+- id: '1699146089606'
+  alias: (Geofence) Joey got to work!
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 0d6f31e839d3a326d066d2176a89ba10
+    domain: device_tracker
+    entity_id: 9990a42b0bd24a8f4c6fc5f894614a29
+    type: enters
+    zone: zone.rii
+  condition: []
+  action:
+  - service: notify.mobile_app_sweet
+    data:
+      message: Joey made it to work!
+  mode: single
+- id: '1699146212319'
+  alias: (Geofence) Joey is home!
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 0d6f31e839d3a326d066d2176a89ba10
+    domain: device_tracker
+    entity_id: 9990a42b0bd24a8f4c6fc5f894614a29
+    type: enters
+    zone: zone.home
+  condition:
+  - condition: zone
+    entity_id: device_tracker.spicy
+    zone: zone.hammock_trace
+  - condition: template
+    value_template: '{{ state_attr(''device_tracker.sweet'', ''latitude'') != state_attr(''device_tracker.spicy'',
+      ''latitude'') and state_attr(''device_tracker.sweet'', ''longitude'') != state_attr(''device_tracker.spicy'',
+      ''longitude'') }}'
+  action:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 15
+      milliseconds: 0
+  - service: notify.mobile_app_sweet
+    data:
+      message: Joey is home!
+  mode: single
+- id: '1700149260493'
+  alias: Front Door Alerts (Frigate)
+  description: ''
+  use_blueprint:
+    path: SgtBatten/Stable.yaml
+    input:
+      camera: camera.doorbell
+      notify_group: MOBILE_DEVICES
+      base_url: https://hass.bigolbrushmotors.org
+      title: Front Door!
+      alert_once: true
+      update_thumbnail: true
+      ios_live_view: false
+      labels:
+      - person
+      - package
+      cooldown: 15
+      silence_timer: 10
+      loiter_timer: 5
+      notify_device: 0d6f31e839d3a326d066d2176a89ba10
+      message: '{{ label }} detected - {{ camera_name }}'
+      attachment: snapshot
+- id: '1700241087642'
+  alias: (Geofence) Joey left the house!
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 0d6f31e839d3a326d066d2176a89ba10
+    domain: device_tracker
+    entity_id: 9990a42b0bd24a8f4c6fc5f894614a29
+    type: leaves
+    zone: zone.home
+  condition:
+  - condition: device
+    device_id: 8ff3cec76d650077f09771fc250ee25d
+    domain: device_tracker
+    entity_id: 7e6009b3a5d1d23e0c436945a062678d
+    type: is_not_home
+  action:
+  - service: notify.mobile_app_sweet
+    data:
+      message: Joey left the house!
+  mode: single
+- id: '1712021492644'
+  alias: (Trigger) Entryway Light
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 302b1d6a8da789299b97a2d7a9e8c343
+    entity_id: 3d98e6d3adfe5c9f8ebc4c7a4ee55f2b
+    domain: switch
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.entryway_daylight
+    metadata: {}
+  mode: single

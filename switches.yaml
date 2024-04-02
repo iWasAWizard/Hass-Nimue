@@ -1,0 +1,14 @@
+- platform: wake_on_lan
+  name: WOL_Centurion
+  host: 10.0.0.6
+  mac: 04:D9:F5:F8:32:48
+  
+- platform: wake_on_lan
+  name: WOL_Tower
+  host: 10.0.0.100
+  mac: 58:11:22:4c:54:85
+  
+- platform: wake_on_lan
+  name: WOL_living_room_tv
+  host: 10.0.0.21
+  mac: bc:45:5b:36:dc:b7

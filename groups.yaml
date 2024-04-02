@@ -1,0 +1,14 @@
+front_door:
+  name: Front Door
+  entities:
+    - binary_sensor.front_door_state_access_control_window_door_is_open
+    - binary_sensor.front_door_lock_the_current_status_of_the_door
+  icon: 'mdi:door'
+  
+network:
+  name: Network Information
+  entities:
+    - switch.wol_centurion
+    - switch.wol_shade
+    - switch.wol_tower
+    - switch.wol_living_room_tv

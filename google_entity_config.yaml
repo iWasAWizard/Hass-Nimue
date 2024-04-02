@@ -1,0 +1,75 @@
+switch.wol_tower:
+  name: "Server Wake-On-LAN"
+  room: "Office"
+switch.wol_living_room_tv:
+  name: "TV Wake-On-LAN"
+  room: "Living Room"
+switch.wol_centurion:
+  name: "Centurion Wake-On-LAN"
+  room: "Office"
+switch.wax_melter:
+  name: "Wax Melter Switch"
+  room: "Kitchen"
+switch.office_switch:
+  name: "Office Switch"
+  room: "Office"
+switch.living_room_switch:
+  name: "Living Room Switch"
+  room: "Living Room"
+switch.kitchen_switch:
+  name: "Kitchen Switch"
+  room: "Kitchen"
+switch.kitchen_chandelier_switch:
+  name: "Kitchen Chandelier Switch"
+  room: "Kitchen"
+switch.bar_switch:
+  name: "Bar Switch"
+  room: "Kitchen"
+switch.hallway_switch:
+  name: "Hallway Switch"
+  room: "Hallway"
+switch.entryway_switch:
+  name: "Entryway Switch"
+  room: "Entryway"
+switch.dick_den_switch:
+  name: "Dick Den Switch"
+  room: "Dick Den"
+switch.cunt_cave_switch:
+  name: "Cunt Cave Switch"
+  room: "Cunt Cave"
+switch.bedroom_switch:
+  name: "Bedroom Switch"
+  room: "Bedroom"
+switch.master_bathroom_switch:
+  name: "Bathroom Switch"
+  room: "Bedroom"
+switch.garage_door_opener:
+  name: "Garage Door Opener"
+  room: "Garage"
+switch.back_porch:
+  name: "Back Porch Switch"
+  room: "Backyard"
+switch.closet_light_switch:
+  name: "Closet Switch"
+  room: "Bedroom"
+switch.christmas_tree:
+  name: "Christmas Tree Switch"
+  room: "Office"
+switch.3d_printer_power:
+  name: "3D Printer Switch"
+  room: "Dick Den"
+switch.laundry_room_switch:
+  name: "Laundry Room Switch"
+  room: "Laundry Room"
+switch.guest_bathroom_switch:
+  name: "Guest Bathroom Switch"
+  room: "Guest Bathroom"
+switch.garage_switch:
+  name: "Garage Switch"
+  room: "Garage"
+switch.front_porch_switch:
+  name: "Front Porch Switch"
+  room: "Entryway"
+switch.driveway_switch:
+  name: "Driveway Switch"
+  room: "Driveway"

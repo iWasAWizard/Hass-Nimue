@@ -1,0 +1,62 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Voice assistant
+assist_pipeline:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+http:
+  server_host: 0.0.0.0
+  server_port: 8123
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key
+  use_x_forwarded_for: true
+  trusted_proxies: !secret proxy_list
+
+# Configs for integrating google home
+google_assistant:
+  project_id: !secret gass_project_id
+  service_account: !include SERVICE_CREDS.json
+  report_state: true
+  exposed_domains:
+    - light
+    - fan
+    - climate
+    - cover
+    - lock
+    - vacuum
+    - water_heater
+    - scene
+  entity_config: !include google_entity_config.yaml
+
+# Notifier services for web
+notify:
+  - name: html5_notifier
+    platform: html5
+    vapid_pub_key: !secret vapid_pub_key
+    vapid_prv_key: !secret vapid_prv_key
+    vapid_email: !secret vapid_email
+    
+# Notifier group for phones
+  - name: MOBILE_DEVICES
+    platform: group
+    services:
+      - service: mobile_app_spicy
+      - service: mobile_app_sweet
+      - service: mobile_app_spicypad
+
+# Other shit
+homeassistant:
+  packages: !include_dir_named packages
+
+group: !include groups.yaml
+switch: !include switches.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+cover: !include cover.yaml

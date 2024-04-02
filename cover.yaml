@@ -1,0 +1,35 @@
+platform: template
+covers:
+      garage_door:
+        device_class: garage
+        friendly_name: "Garage Door"
+        position_template: >-
+          {% if is_state('binary_sensor.garage_door_state_access_control_window_door_is_open', 'on') %}
+            100
+          {% else %}
+            0
+          {% endif %}
+        open_cover:
+          - condition: state
+            entity_id: binary_sensor.garage_door_state_access_control_window_door_is_open
+            state: "on"
+          - service: script.garage_door_remote
+            target:
+              entity_id: script.garage_door_remote
+        close_cover:
+          - condition: state
+            entity_id: binary_sensor.garage_door_state_access_control_window_door_is_open
+            state: "off"
+          - service: script.garage_door_remote
+            target:
+              entity_id: script.garage_door_remote
+        stop_cover:
+          service: switch.turn_on
+          target:
+            entity_id: script.garage_door_remote
+        icon_template: >-
+          {% if is_state('binary_sensor.garage_door_state_access_control_window_door_is_open', 'on') %}
+            mdi:garage-open
+          {% else %}
+            mdi:garage
+          {% endif %}

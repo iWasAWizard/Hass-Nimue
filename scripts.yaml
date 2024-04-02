@@ -1,0 +1,28 @@
+garage_door_remote:
+  sequence:
+  - type: turn_on
+    device_id: bd59d2e5a9acea927dd7a6241fcd3a81
+    entity_id: switch.garage_door_opener
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 500
+  - type: turn_off
+    device_id: bd59d2e5a9acea927dd7a6241fcd3a81
+    entity_id: switch.garage_door_opener
+    domain: switch
+  mode: single
+  alias: Garage Door Remote
+  icon: mdi:garage
+  
+keymaster_front_door_lock_manual_notify:
+  mode: parallel
+  sequence:
+  - service: notify.MOBILE_DEVICES
+    data:
+      title: '{{ title }}'
+      message: '{{ message }}'
+  alias: keymaster_front_door_lock_manual_notify
+  max: 10

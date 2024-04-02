@@ -1,0 +1,17 @@
+# Nusance Directories
+www/*
+tts/*
+custom_components/*
+packages/*
+blueprints/*
+themes/*
+
+# Local Data
+*.db*
+*.log*
+.*
+!.gitignore
+
+# Nice try.
+secrets.yaml
+SERVICE_CREDS.json
