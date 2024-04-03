@@ -11,8 +11,6 @@ tts:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
-  server_host: 0.0.0.0
-  server_port: 8123
   ssl_certificate: !secret ssl_certificate
   ssl_key: !secret ssl_key
   use_x_forwarded_for: true

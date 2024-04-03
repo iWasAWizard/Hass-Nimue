@@ -15,3 +15,4 @@ themes/*
 # Nice try.
 secrets.yaml
 SERVICE_CREDS.json
+html5_push_registrations.conf
